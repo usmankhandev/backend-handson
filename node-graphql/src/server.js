@@ -14,7 +14,7 @@ async function startServer() {
     const {url} = await startStandaloneServer(server, {
         listen: {port: 4000}
     })
-    console.log(`Server is running at url: ${url}`);
+    console.log(`Server is running at the url: ${url}`);
 }
 
 startServer();

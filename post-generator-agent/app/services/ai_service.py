@@ -1,21 +1,16 @@
-from dotenv import load_dotenv as loadEnv
-import os
-
-loadEnv()
-from openai import OpenAI
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+import requests
 
 def generate_post(business, tone, platform) -> str:
-    
     prompt = f"Write a social media post about {business} in a {tone} tone for {platform}"
-    response = client.chat.completions.create(
-        model = "gpt-3.5-turbo",
-        messages = [
-            {"role": "system", "content": prompt}
-        ]
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json={"model": "mistral:latest", "prompt": prompt, "stream": False},
     )
     print(response)
+    if response.status_code != 200:
+        return "Error generating post"
+    data = response.json()
+    return data.get("response", "No response from model")
 
 
 

@@ -11,7 +11,3 @@ def generate_post(business, tone, platform) -> str:
         return "Error generating post"
     data = response.json()
     return data.get("response", "No response from model")
-
-
-
-generate_post("AI in healthcare", "informative", "LinkedIn")

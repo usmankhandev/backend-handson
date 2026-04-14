@@ -1,13 +1,34 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.services.ai_service import generate_post
+from app.schemas.post import PostRequest, PostResponse
+from app.models.post import Post
+from app.db.session import SessionLocal
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
-@router.post("/generate")
-def generate_social_media_post(data: dict):
-    business = data.get("business")
-    platform = data.get("platform")
-    tone = data.get("tone")
+
+def get_db():
+    db = SessionLocal()
+    try: 
+        yield db
+    finally:
+        db.close()
+
+
+@router.post("/generate", response_model=PostResponse)
+def generate_social_media_post(data: PostRequest, db: Session = Depends(get_db)):
+    content = generate_post(data.business, data.tone, data.platform)
     
-    result = generate_post(business, tone, platform)
-    return {"post": result}
+    post = Post(
+        business=data.business,
+        platform=data.platform,
+        tone=data.tone,
+        content=content
+    )
+    db.add(post)
+    db.commit()
+    db.refresh(post)
+    
+    
+    return PostResponse(post = content)

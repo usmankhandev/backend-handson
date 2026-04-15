@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from app.db.session import engine
-from app.routes import posts
+from app.routes import post
 from app.db.base import Base
 from app.models.post import Post
 
 
 
 app = FastAPI()
-app.include_router(posts.router)
+app.include_router(post.router)
 
 try:
     Base.metadata.create_all(bind=engine)

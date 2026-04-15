@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from app.schemas.response import APIResponse
 from app.services.ai_service import generate_post
 from app.schemas.post import PostRequest, PostResponse
 from app.models.post import Post
@@ -16,8 +17,8 @@ def get_db():
         db.close()
 
 
-@router.post("/generate", response_model=PostResponse)
-def generate_social_media_post(data: PostRequest, db: Session = Depends(get_db)):
+@router.post("/generate", response_model=APIResponse[PostResponse])
+async def generate_social_media_post(data: PostRequest, db: Session = Depends(get_db)):
     content = generate_post(data.business, data.tone, data.platform)
     
     post = Post(

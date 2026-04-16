@@ -1,7 +1,7 @@
 import requests
 
 def generate_post(business, tone, platform) -> str:
-    prompt = f"Write a social media post about {business} in a {tone} tone for {platform}"
+    prompt = f"Kindly Write a social media post about {business} in a {tone} tone for {platform}"
     response = requests.post(
         "http://localhost:11434/api/generate",
         json={"model": "mistral:latest", "prompt": prompt, "stream": False},

@@ -5,16 +5,10 @@ from app.schemas.post import PostRequest, PostResponse
 from app.models.post import Post
 from app.db.session import SessionLocal
 from sqlalchemy.orm import Session
+from db.dependencies import get_db
 
 router = APIRouter()
 
-
-def get_db():
-    db = SessionLocal()
-    try: 
-        yield db
-    finally:
-        db.close()
 
 
 @router.post("/generate", response_model=APIResponse[PostResponse])

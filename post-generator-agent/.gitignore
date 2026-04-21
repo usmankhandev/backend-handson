@@ -5,3 +5,4 @@ __pycache__/
 *.pyo
 *.pyd__pycache__/
 *.pyc
+app/__pycache__/main.cpython-310.pyc

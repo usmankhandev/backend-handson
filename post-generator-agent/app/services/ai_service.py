@@ -1,7 +1,8 @@
 import requests
+from app.templates.template_router import build_prompt
 
 def generate_post(business, tone, platform) -> str:
-    prompt = f"Kindly Write a social media post about {business} in a {tone} tone for {platform}"
+    prompt = build_prompt(platform, business, tone)
     response = requests.post(
         "http://localhost:11434/api/generate",
         json={"model": "mistral:latest", "prompt": prompt, "stream": False},

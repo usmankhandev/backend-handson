@@ -33,8 +33,7 @@ class JSONFormatter(logging.Formatter):
                 "module", "msecs", "msg", "name", "pathname", "process",
                 "processName", "relativeCreated", "stack_info", "thread",
                 "threadName",
-            };
-            
+            }:
                 payload[key] = value
         
         if record.exc_info:

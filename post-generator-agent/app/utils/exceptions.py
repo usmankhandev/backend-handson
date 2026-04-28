@@ -65,7 +65,7 @@ class LLMError(AppError):
         super().__init__(detail=detail)
         
 
-class OllamaUnavailbleError(LLMError):
+class OllamaUnavailableError(LLMError):
     error_code = "LLM_UNAVAILABLE"
     
     def __init__(self, detail: str = "LLM Service is currently unavailable"):
@@ -79,8 +79,8 @@ class OllamaTimeoutError(LLMError):
     
     def __init__(self, timeout_seconds: float = 0):
         super().__init__(
-            detail = f"LLM Service timed out after {timeout_seconds} seconds"
-            timeout_seconds = timeout_seconds
+            detail=f"LLM Service timed out after {timeout_seconds} seconds",
+            timeout_seconds=timeout_seconds
         )
 
 class LLMGenerationError(LLMError):
